@@ -1,0 +1,17 @@
+@import "../../styles/buttons";
+
+.topbar{
+    padding: .5rem 0;
+}
+
+.nav_inner{
+    width: 85%;
+    margin: 0 auto;
+}
+
+.btn_home{
+    @include btn-icon;
+    &:hover{
+        background-color: rgba(0,0,0,.1);
+    }
+}

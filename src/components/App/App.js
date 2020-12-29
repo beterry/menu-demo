@@ -4,6 +4,7 @@ import './App.module.scss'
 //import components
 import CatButton from '../CatButton/CatButton'
 import CatPage from '../CatPage/CatPage'
+import TopBar from '../TopBar/TopBar'
 
 //import styles
 import styles from './App.module.scss'
@@ -46,19 +47,22 @@ function App() {
 
     return (
         <div>
+            <TopBar activeCat={activeCat} handleBack={() => setActiveCat(null)}/>
             <main>
-                <h1>Menu Demo</h1>
-                <h2>Categories</h2>
-                <section className={styles.catgrid}>
-                    {cats.map(category => 
-                        <CatButton
-                            name={category}
-                            key={category} 
-                            handleClick={() => changeActiveCat(category)}
-                        />
-                    )}
-                </section>
-                {activeCat && <CatPage items={menu.filter(item => item.category === activeCat)} />}
+                <h2>{activeCat ? activeCat : 'Categories'}</h2>
+                {activeCat ?
+                    <CatPage items={menu.filter(item => item.category === activeCat)} />
+                :
+                    <section className={styles.catgrid}>
+                        {cats.map(category => 
+                            <CatButton
+                                name={category}
+                                key={category} 
+                                handleClick={() => changeActiveCat(category)}
+                            />
+                        )}
+                    </section>
+                }
             </main>
         </div>
     );
