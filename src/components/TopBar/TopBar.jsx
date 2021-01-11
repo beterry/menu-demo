@@ -9,15 +9,9 @@ const TopBar = ({activeCat, handleBack}) => {
     return (
         <nav className={styles.topbar} style={{backgroundColor: '#366959'}}>
             <div className={styles.nav_inner}>
-                {activeCat ? 
-                    <button onClick={handleBack} className={styles.btn_home}>
-                        <BackIcon color='white' />
-                    </button>
-                :
-                    <a href='https://benterry.dev' target='_blank' rel='noreferrer' className={styles.btn_home}>
-                        <HomeIcon color='white' />
-                    </a>
-                }
+                <a href='https://benterry.dev' target='_blank' rel='noreferrer' className={styles.btn_home}>
+                    <HomeIcon color='white' />
+                </a>
             </div>
         </nav>
     )

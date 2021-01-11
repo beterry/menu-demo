@@ -9,8 +9,8 @@ const MenuItem = ({item}) => {
     
     return (
         <li>
-            <h2>{item.name}</h2>
-            <h3>{`$${item.price}`}</h3>
+            <h3>{item.name}</h3>
+            <h4>{`$${item.price}`}</h4>
             <p>{ingredientString}</p>
         </li>
     )

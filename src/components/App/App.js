@@ -2,12 +2,12 @@ import {useState, useEffect} from 'react'
 import './App.module.scss'
 
 //import components
-import CatButton from '../CatButton/CatButton'
-import CatPage from '../CatPage/CatPage'
 import TopBar from '../TopBar/TopBar'
+import MenuItem from '../MenuItem/MenuItem'
+import Category from '../Category/Category'
 
 //import styles
-import styles from './App.module.scss'
+// import styles from './App.module.scss'
 
 const contentful = require("contentful")
 
@@ -18,8 +18,8 @@ const client = contentful.createClient({
 
 function App() {
     const [menu, setMenu] = useState([])
-    const [cats, setCats] = useState([])
-    const [activeCat, setActiveCat] = useState(null)
+    const [categories, setCategories] = useState([])
+    const [activeCats, setActiveCats] = useState([])
 
     //call to API and populate menu
     useEffect(() => {
@@ -30,39 +30,60 @@ function App() {
 
     //parse menu and discover categories
     useEffect(() => {
-        let categories = []
+        let tempCats = []
         if (menu.length > 0){
             menu.forEach(item => {
-                if (!categories.includes(item.category)){
-                    categories.push(item.category)
+                if (!tempCats.includes(item.category)){
+                    tempCats.push(item.category)
                 }
             })
         }
-        setCats(categories)
+        setCategories(tempCats)
     }, [menu])
 
-    const changeActiveCat = (cat) => {
-        setActiveCat(cat)
+    useEffect(() => {
+        console.log("Active Cats: ", activeCats)
+    }, [activeCats])
+
+    const handleTapCat = (e, newCat) => {
+        e.preventDefault()
+        const newCatIndex = activeCats.indexOf(newCat)
+
+        if (newCatIndex >= 0){
+            //delete category from array
+            const newActiveCats = [...activeCats]
+            newActiveCats.splice(newCatIndex, 1)
+            setActiveCats(newActiveCats)
+        }else {
+            //add new category to state
+            setActiveCats([...activeCats, newCat])
+        }
     }
 
     return (
         <div>
-            <TopBar activeCat={activeCat} handleBack={() => setActiveCat(null)}/>
+            <TopBar />
             <main>
-                <h2>{activeCat ? activeCat : 'Categories'}</h2>
-                {activeCat ?
-                    <CatPage items={menu.filter(item => item.category === activeCat)} />
-                :
-                    <section className={styles.catgrid}>
-                        {cats.map(category => 
-                            <CatButton
-                                name={category}
-                                key={category} 
-                                handleClick={() => changeActiveCat(category)}
-                            />
-                        )}
-                    </section>
-                }
+                <h1>Logo Here</h1>
+                {categories.map(cat => <button key={cat} onClick={(e) => handleTapCat(e, cat)}>{cat}</button>)}
+                {categories.map(cat => {
+                    if (activeCats.includes(cat) || !activeCats.length){
+                        return (
+                            <Category title={cat} key={cat}>
+                                {menu.map(item => {
+                                    if(item.category === cat){
+                                        return <MenuItem item={item} key={item.name}/>
+                                    }else {
+                                        return null
+                                    }
+                                })}
+                            </Category>
+                        )
+                    }else {
+                        return null
+                    }
+                    
+                })}
             </main>
         </div>
     );
