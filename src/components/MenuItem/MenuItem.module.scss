@@ -4,16 +4,34 @@
     //spacing
     padding: 1rem 0;
 
+    h3{
+        font-size: 1rem;
+    }
+
     p{
         color: #6C6C6C;
     }
 
 }
 
-.namePrice{
+.top{
     display: flex;
     justify-content: space-between;
 
     //spacing below
     margin-bottom: .5rem;
+}
+
+.price{
+    flex-shrink: 0;
+}
+
+.name{
+    flex-shrink: 1;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    svg{
+        margin-left: .5rem;
+    }
 }
