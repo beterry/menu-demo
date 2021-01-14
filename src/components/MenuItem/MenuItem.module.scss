@@ -1,0 +1,19 @@
+.foodItem{
+
+
+    //spacing
+    padding: 1rem 0;
+
+    p{
+        color: #6C6C6C;
+    }
+
+}
+
+.namePrice{
+    display: flex;
+    justify-content: space-between;
+
+    //spacing below
+    margin-bottom: .5rem;
+}
