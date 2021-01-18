@@ -1,16 +1,22 @@
-body{
-    background: lightgray;
-    font-family: 'Raleway', sans-serif;
+.headerCtn{
+    background: white;
 }
 
-ul{
-    list-style-type: none;
-    margin-block-start: 0;
-    margin-block-end: 0;
-    padding-inline-start: 0;
+.logo{
+    text-align: center;
+    padding: 1rem 0;
 }
 
-//fonts
-h1, h2, h3, h4, h5, h6, p{
-    margin: 0;
+.catCtn{
+    display: flex;
+
+    overflow-x: scroll;
+
+    button:first-child{
+        margin-left: 1rem !important;
+    }
+
+    button:last-child{
+        margin-right: 1rem !important;
+    }
 }

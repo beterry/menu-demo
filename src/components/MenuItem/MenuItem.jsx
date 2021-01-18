@@ -26,13 +26,13 @@ const MenuItem = ({item}) => {
                     case 'Popular':
                         return <PopIcon key={`${item.name} tag:${index}`} color='#366959'/>
                     case 'Gluten Free':
-                        return <GlutenIcon color='#366959'/>
+                        return <GlutenIcon color='#366959' key={`${item.name} tag:${index}`}/>
                     case 'New':
-                        return <NewIcon color='#EB9B3B'/>
+                        return <NewIcon color='#EB9B3B' key={`${item.name} tag:${index}`}/>
                     case 'Vegetarian':
-                        return <VegIcon color='#366959'/>
+                        return <VegIcon color='#366959' key={`${item.name} tag:${index}`}/>
                     case 'Spicy':
-                        return <FireIcon color='#366959'/>
+                        return <FireIcon color='#366959' key={`${item.name} tag:${index}`}/>
                     default:
                         return null
                 }
