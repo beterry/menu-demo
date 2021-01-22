@@ -4,7 +4,7 @@ import './App.module.scss'
 //import components
 import TopBar from '../TopBar/TopBar';
 import MenuItem from '../MenuItem/MenuItem';
-import Category from '../Category/Category';
+import CategorySection from '../CategorySection/CategorySection';
 import CatButton from '../CategoryButton/CatButton';
 import TagButton from '../TagButton/TagButton'
 
@@ -153,7 +153,7 @@ function App() {
                     {categories.map(cat => {
                         if (activeCats.includes(cat) || !activeCats.length){
                             return (
-                                <Category title={cat} key={cat}>
+                                <CategorySection title={cat} key={cat}>
                                     {menu.map(item => {
                                         if(item.category === cat && tagsMatch(item)){
                                             return <MenuItem item={item} key={item.name}/>
@@ -161,7 +161,7 @@ function App() {
                                             return null
                                         }
                                     })}
-                                </Category>
+                                </CategorySection>
                             )
                         }else {
                             return null

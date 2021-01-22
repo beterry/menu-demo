@@ -1,4 +1,4 @@
-import styles from './Category.module.scss'
+import styles from './CategorySection.module.scss'
 
 const Category = ({title, children}) => {
     return (
