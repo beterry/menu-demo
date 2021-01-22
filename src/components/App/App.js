@@ -6,6 +6,7 @@ import TopBar from '../TopBar/TopBar';
 import MenuItem from '../MenuItem/MenuItem';
 import Category from '../Category/Category';
 import CatButton from '../CategoryButton/CatButton';
+import TagButton from '../TagButton/TagButton'
 
 //import styles
 import styles from './App.module.scss';
@@ -136,8 +137,15 @@ function App() {
                                 </CatButton>
                             )}
                         </div>
-                        <div>
-                            {tags.map(tag => <button key={tag} onClick={(e) => handleTapTag(e, tag)}>{tag}</button>)}
+                        <div className={styles.tagCtn}>
+                            {tags.map(tag => 
+                                <TagButton
+                                    tag={tag}
+                                    key={tag}
+                                    handleTapTag={(e) => handleTapTag(e, tag)}
+                                    isActive={activeTags.includes(tag)}
+                                />
+                            )}
                         </div>
                     </header>
                     

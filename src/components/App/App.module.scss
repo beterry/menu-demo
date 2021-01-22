@@ -1,5 +1,8 @@
 .headerCtn{
     background: white;
+
+    //border
+    border-bottom: 1px solid #D1D1D1;
 }
 
 .logo{
@@ -8,6 +11,22 @@
 }
 
 .catCtn{
+    display: flex;
+
+    overflow-x: scroll;
+
+    margin-bottom: .5rem;
+
+    button:first-child{
+        margin-left: 1rem !important;
+    }
+
+    button:last-child{
+        margin-right: 1rem !important;
+    }
+}
+
+.tagCtn{
     display: flex;
 
     overflow-x: scroll;
