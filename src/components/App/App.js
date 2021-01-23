@@ -19,12 +19,11 @@ const client = contentful.createClient({
 });
 
 //create context
-const colors = {
-    main: '#366959',
-    secondary: '#F7F5E9',
-    tertiary: '#EB9B3B',
+const defaultSiteColors = {
+    mainColor: '#e6e6e6',
+    categoryButtonColor: '#e6e6e6',
 };
-const ColorContext = React.createContext(colors);
+const ColorContext = React.createContext(defaultSiteColors);
 
 //start app function
 function App() {
@@ -36,10 +35,22 @@ function App() {
     const [tags, setTags] = useState([]);
     const [activeTags, setActiveTags] = useState([]);
 
+    const [siteColors, setSiteColors] = useState(defaultSiteColors);
+
     //call to API and populate menu
     useEffect(() => {
-        client.getEntries()
+        //food items
+        client.getEntries({
+            'content_type': 'item'
+        })
             .then((response) => setMenu(response.items.map(item => item.fields)))
+            .catch(console.error);
+
+        //site settings
+        client.getEntries({
+            'content_type': 'siteSettings'
+        })
+            .then((response) => setSiteColors({...response.items[0].fields}))
             .catch(console.error);
     }, [])
 
@@ -120,7 +131,7 @@ function App() {
     }
 
     return (
-        <ColorContext.Provider value={colors}>
+        <ColorContext.Provider value={siteColors}>
                 <TopBar />
                 <main>
 

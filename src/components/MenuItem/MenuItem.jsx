@@ -1,3 +1,6 @@
+import {useContext} from 'react'
+import {ColorContext} from '../App/App'
+
 import styles from './MenuItem.module.scss'
 
 import VegIcon from '../../icons/food/VegIcon'
@@ -7,6 +10,8 @@ import PopIcon from '../../icons/food/PopIcon'
 import NewIcon from '../../icons/food/NewIcon'
 
 const MenuItem = ({item}) => {
+
+    const colors = useContext(ColorContext)
 
     //compile ingredients string
     let ingredientString = ""
@@ -24,15 +29,15 @@ const MenuItem = ({item}) => {
             return item.tags.map((tag, index) => {
                 switch(tag){
                     case 'Popular':
-                        return <PopIcon key={`${item.name} tag:${index}`} color='#366959'/>
+                        return <PopIcon key={`${item.name} tag:${index}`} color={colors.mainColor}/>
                     case 'Gluten Free':
-                        return <GlutenIcon color='#366959' key={`${item.name} tag:${index}`}/>
+                        return <GlutenIcon color={colors.mainColor} key={`${item.name} tag:${index}`}/>
                     case 'New':
-                        return <NewIcon color='#EB9B3B' key={`${item.name} tag:${index}`}/>
+                        return <NewIcon color={colors.mainColor} key={`${item.name} tag:${index}`}/>
                     case 'Vegetarian':
-                        return <VegIcon color='#366959' key={`${item.name} tag:${index}`}/>
+                        return <VegIcon color={colors.mainColor} key={`${item.name} tag:${index}`}/>
                     case 'Spicy':
-                        return <FireIcon color='#366959' key={`${item.name} tag:${index}`}/>
+                        return <FireIcon color={colors.mainColor} key={`${item.name} tag:${index}`}/>
                     default:
                         return null
                 }

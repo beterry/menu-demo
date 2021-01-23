@@ -11,7 +11,7 @@ const TopBar = ({activeCat, handleBack}) => {
     const colors = useContext(ColorContext)
 
     return (
-        <nav className={styles.topbar} style={{backgroundColor: colors.main}}>
+        <nav className={styles.topbar} style={{backgroundColor: colors.mainColor}}>
             <div className={styles.nav_inner}>
                 <a href='https://benterry.dev' target='_blank' rel='noreferrer' className={styles.btn_home}>
                     <HomeIcon color='white' />
