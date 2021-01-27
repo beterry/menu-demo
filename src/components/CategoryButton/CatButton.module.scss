@@ -3,6 +3,7 @@
     height: 5rem;
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
@@ -10,12 +11,33 @@
     border: none;
     border-radius: .2rem;
 
-    margin: 0 .25rem 1rem .25rem;
+    margin: 0 .25rem .5rem .25rem;
 
     padding: .5rem;
+
+    line-height: 1;
+
+    font-size: .75rem;
+    font-weight: 500;
 
     &:focus{
         outline: none;
     }
+
     
+    
+}
+
+.iconCtn{
+    width: auto;
+    height: 56.25%;
+
+    display: flex;
+    align-items: center;
+
+    margin-bottom: .325rem;
+
+    svg{
+        width: 100%;
+    }
 }

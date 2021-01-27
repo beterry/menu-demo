@@ -143,6 +143,7 @@ function App() {
                                     key={cat}
                                     isActive={activeCats.includes(cat)}
                                     onClick={(e) => handleTapCat(e, cat)}
+                                    category={cat}
                                 >
                                     {cat}
                                 </CatButton>
