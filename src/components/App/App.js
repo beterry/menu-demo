@@ -7,6 +7,7 @@ import MenuItem from '../MenuItem/MenuItem';
 import CategorySection from '../CategorySection/CategorySection';
 import CatButton from '../CategoryButton/CatButton';
 import TagButton from '../TagButton/TagButton'
+import DrinkSection from '../DrinkSection/DrinkSection';
 
 //import styles
 import styles from './App.module.scss';
@@ -28,6 +29,7 @@ const ColorContext = React.createContext(defaultSiteColors);
 //start app function
 function App() {
     const [menu, setMenu] = useState([]);
+    const [drinks, setDrinks] = useState([])
 
     const [categories, setCategories] = useState([]);
     const [activeCats, setActiveCats] = useState([]);
@@ -44,6 +46,13 @@ function App() {
             'content_type': 'item'
         })
             .then((response) => setMenu(response.items.map(item => item.fields)))
+            .catch(console.error);
+
+        //drinks items
+        client.getEntries({
+            'content_type': 'drinkItem'
+        })
+            .then((response) => setDrinks(response.items.map(item => item.fields)))
             .catch(console.error);
 
         //site settings
@@ -161,18 +170,21 @@ function App() {
                         </div>
                     </header>
                     
+                    <DrinkSection drinks={drinks}/>
                     
                     {categories.map(cat => {
                         if (activeCats.includes(cat) || !activeCats.length){
                             return (
                                 <CategorySection title={cat} key={cat}>
-                                    {menu.map(item => {
-                                        if(item.category === cat && tagsMatch(item)){
-                                            return <MenuItem item={item} key={item.name}/>
-                                        }else {
-                                            return null
-                                        }
-                                    })}
+                                    <ul>
+                                        {menu.map(item => {
+                                            if(item.category === cat && tagsMatch(item)){
+                                                return <MenuItem type='food' item={item} key={item.name}/>
+                                            }else {
+                                                return null
+                                            }
+                                        })}
+                                    </ul>
                                 </CategorySection>
                             )
                         }else {

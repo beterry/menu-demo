@@ -9,7 +9,7 @@ import GlutenIcon from '../../icons/food/GlutenIcon'
 import PopIcon from '../../icons/food/PopIcon'
 import NewIcon from '../../icons/food/NewIcon'
 
-const MenuItem = ({item}) => {
+const MenuItem = ({item, type}) => {
 
     const colors = useContext(ColorContext)
 
@@ -23,7 +23,7 @@ const MenuItem = ({item}) => {
         }
     }
 
-    //compile icons for tags
+    //compile icons for food tags
     const renderTagIcons = () => {
         if (item.tags){
             return item.tags.map((tag, index) => {
@@ -46,19 +46,68 @@ const MenuItem = ({item}) => {
             return null
         }
     }
+
+    //compile string for drink ABV, maker, location
+    const renderDrinkDetails = () => {
+        let drinkDetails = [];
+
+        if (item.abv){
+            drinkDetails.push(`${item.abv}% ABV`);
+        }
+
+        if (item.maker){
+            drinkDetails.push(item.maker);
+        }
+
+        if (item.location){
+            drinkDetails.push(item.location);
+        }
+
+        if (drinkDetails.length){
+            return drinkDetails.join(' | ');
+        }else{
+            return null;
+        }
+    }
     
-    return (
-        <li className={styles.foodItem}>
-            <div className={styles.top}>
-                <div className={styles.name}>
-                    <h3>{item.name}</h3>
-                    {renderTagIcons()}
+    if (type === "food"){
+        return (
+            <li className={styles.menuItem}>
+                <div className={styles.top}>
+                    <div className={styles.name}>
+                        <h4>{item.name}</h4>
+                        {renderTagIcons()}
+                    </div>
+                    <h5 className={styles.price}>{`$${item.price.toFixed(2)}`}</h5>
                 </div>
-                <h4 className={styles.price}>{`$${item.price}`}</h4>
-            </div>
-            <p>{ingredientString}</p>
-        </li>
-    )
+                <p>{ingredientString}</p>
+            </li>
+        )
+    }
+
+    else if (type === 'drink'){
+        return (
+            <li className={styles.menuItem}>
+                <div className={styles.top}>
+                    <div className={styles.name}>
+                        <h4>{item.name}</h4>
+                    </div>
+                    <div className={styles.price}>
+                        <h5>{`$${item.price.toFixed(2)}`}</h5>
+                        {item.ounces && <p className={styles.oz}>{`${item.ounces}oz`}</p>}
+                    </div>
+                </div>
+                <p>{renderDrinkDetails()}</p>
+                {item.description && <p className={styles.drinkDesc}>{item.description}</p>}
+            </li>
+        )
+    }
+
+    else {
+        console.log("Unsupported type");
+        return null;
+    }
+    
 }
 
 export default MenuItem

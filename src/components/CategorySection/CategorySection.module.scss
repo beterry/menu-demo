@@ -11,12 +11,14 @@
 
     h2{
         padding-bottom: 1rem;
-        border-bottom: 1px solid lightgray; 
     }
     
     ul{
         li{
             border-bottom: 1px solid lightgray;
+        }
+        li:first-child{
+            border-top: 1px solid lightgray;
         }
         li:last-child{
             border-bottom: none;
