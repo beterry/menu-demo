@@ -25,6 +25,7 @@ const CatButton = ({isActive, onClick, category, children}) => {
         Salads: <SaladIcon color={isActive ? 'white' : '#141518'}/>,
         Flatbreads: <FlatbreadIcon color={isActive ? 'white' : '#141518'}/>,
         Specials: <SpecialsIcon color={isActive ? 'white' : '#141518'}/>,
+        Drinks: <DrinkIcon color={isActive ? 'white' : '#141518'}/>,
     }
 
     return (

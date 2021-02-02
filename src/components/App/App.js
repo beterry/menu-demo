@@ -98,6 +98,11 @@ function App() {
             //add new category to state
             setActiveCats([...activeCats, newCat])
         }
+
+        //if Drinks are tapped, clear all tags
+        if (newCat === "Drinks"){
+            setActiveTags([]);
+        }
     }
 
     const handleTapTag = (e, newTag) => {
@@ -106,12 +111,20 @@ function App() {
 
         if (newTagIndex >= 0){
             //delete tag from array
-            const newActiveTags = [...activeTags];
+            let newActiveTags = [...activeTags];
             newActiveTags.splice(newTagIndex, 1);
             setActiveTags(newActiveTags);
         }else {
             //add new tag to state
             setActiveTags([...activeTags, newTag]);
+        }
+
+        //remove Drinks from active cats
+        if (activeCats.includes("Drinks")){
+            const drinksIndex = activeCats.indexOf("Drinks");
+            let newActiveCats = [...activeCats];
+            newActiveCats.splice(drinksIndex, 1);
+            setActiveCats(newActiveCats);
         }
     }
 
@@ -147,6 +160,15 @@ function App() {
                     <header className={styles.headerCtn}>
                         <h1 className={styles.logo}>Logo Here</h1>
                         <div className={styles.catCtn}>
+                            {drinks.length > 0 &&
+                                <CatButton
+                                    isActive={activeCats.includes("Drinks")}
+                                    onClick={(e) => handleTapCat(e, "Drinks")}
+                                    category="Drinks"
+                                >
+                                    Drinks
+                                </CatButton>
+                            }
                             {categories.map(cat => 
                                 <CatButton
                                     key={cat}
@@ -170,7 +192,7 @@ function App() {
                         </div>
                     </header>
                     
-                    <DrinkSection drinks={drinks}/>
+                    {(activeCats.includes("Drinks") || !activeCats.length) && <DrinkSection drinks={drinks}/>}
                     
                     {categories.map(cat => {
                         if (activeCats.includes(cat) || !activeCats.length){

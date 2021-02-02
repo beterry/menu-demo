@@ -22,8 +22,6 @@ const DrinkSection = ({drinks}) => {
         })
     }
 
-    console.log(drinkCats);
-
     return (
         <CategorySection title="Drinks">
             {drinkCats.map(cat => 
