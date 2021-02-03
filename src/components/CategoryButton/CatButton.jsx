@@ -12,29 +12,29 @@ import DrinkIcon from '../../icons/categories/DrinkIcon';
 import SpecialsIcon from '../../icons/categories/SpecialsIcon';
 import DessertIcon from '../../icons/categories/DessertIcon';
 
-const CatButton = ({isActive, onClick, category, children}) => {
+const CatButton = ({href, category, children}) => {
 
     const colors = useContext(ColorContext);
 
     const catIcons = {
-        Apps: <AppIcon color={isActive ? 'white' : '#141518'}/>,
-        Desserts: <DessertIcon color={isActive ? 'white' : '#141518'}/>,
-        Entrees: <EntreeIcon color={isActive ? 'white' : '#141518'}/>,
-        Burgers: <BurgerIcon color={isActive ? 'white' : '#141518'}/>,
-        Sandwiches: <SandwichIcon color={isActive ? 'white' : '#141518'}/>,
-        Salads: <SaladIcon color={isActive ? 'white' : '#141518'}/>,
-        Flatbreads: <FlatbreadIcon color={isActive ? 'white' : '#141518'}/>,
-        Specials: <SpecialsIcon color={isActive ? 'white' : '#141518'}/>,
-        Drinks: <DrinkIcon color={isActive ? 'white' : '#141518'}/>,
+        Apps: <AppIcon color='#141518'/>,
+        Desserts: <DessertIcon color='#141518'/>,
+        Entrees: <EntreeIcon color='#141518'/>,
+        Burgers: <BurgerIcon color='#141518'/>,
+        Sandwiches: <SandwichIcon color='#141518'/>,
+        Salads: <SaladIcon color='#141518'/>,
+        Flatbreads: <FlatbreadIcon color='#141518'/>,
+        Specials: <SpecialsIcon color='#141518'/>,
+        Drinks: <DrinkIcon color='#141518'/>,
     }
 
     return (
-        <button
+        <a
             className={styles.catButton}
-            onClick={onClick}
+            href={href}
             style={{
-                background: isActive ? colors.mainColor : colors.categoryButtonColor,
-                color: isActive ? 'white' : '#141518',
+                background: colors.categoryButtonColor,
+                color: '#141518',
             }}
         >
             <div className={styles.iconCtn}>
@@ -42,7 +42,7 @@ const CatButton = ({isActive, onClick, category, children}) => {
             </div>
             
             {children}
-        </button>
+        </a>
     );
 };
 

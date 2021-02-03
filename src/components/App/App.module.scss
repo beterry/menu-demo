@@ -3,6 +3,12 @@
 
     //border
     border-bottom: 1px solid #D1D1D1;
+
+    //sticky
+    position: sticky;
+    top: 0;
+
+    z-index: 100;
 }
 
 .logo{

@@ -32,7 +32,6 @@ function App() {
     const [drinks, setDrinks] = useState([])
 
     const [categories, setCategories] = useState([]);
-    const [activeCats, setActiveCats] = useState([]);
 
     const [tags, setTags] = useState([]);
     const [activeTags, setActiveTags] = useState([]);
@@ -85,26 +84,6 @@ function App() {
         setTags(tempTags);
     }, [menu])
 
-    const handleTapCat = (e, newCat) => {
-        e.preventDefault();
-        const newCatIndex = activeCats.indexOf(newCat);
-
-        if (newCatIndex >= 0){
-            //delete category from array
-            const newActiveCats = [...activeCats]
-            newActiveCats.splice(newCatIndex, 1)
-            setActiveCats(newActiveCats)
-        }else {
-            //add new category to state
-            setActiveCats([...activeCats, newCat])
-        }
-
-        //if Drinks are tapped, clear all tags
-        if (newCat === "Drinks"){
-            setActiveTags([]);
-        }
-    }
-
     const handleTapTag = (e, newTag) => {
         e.preventDefault();
         const newTagIndex = activeTags.indexOf(newTag);
@@ -117,14 +96,6 @@ function App() {
         }else {
             //add new tag to state
             setActiveTags([...activeTags, newTag]);
-        }
-
-        //remove Drinks from active cats
-        if (activeCats.includes("Drinks")){
-            const drinksIndex = activeCats.indexOf("Drinks");
-            let newActiveCats = [...activeCats];
-            newActiveCats.splice(drinksIndex, 1);
-            setActiveCats(newActiveCats);
         }
     }
 
@@ -159,11 +130,12 @@ function App() {
 
                     <header className={styles.headerCtn}>
                         <h1 className={styles.logo}>Logo Here</h1>
+
+                        {/* CATEGORY BUTTONS */}
                         <div className={styles.catCtn}>
                             {drinks.length > 0 &&
                                 <CatButton
-                                    isActive={activeCats.includes("Drinks")}
-                                    onClick={(e) => handleTapCat(e, "Drinks")}
+                                    href={`#Drinks`}
                                     category="Drinks"
                                 >
                                     Drinks
@@ -172,14 +144,15 @@ function App() {
                             {categories.map(cat => 
                                 <CatButton
                                     key={cat}
-                                    isActive={activeCats.includes(cat)}
-                                    onClick={(e) => handleTapCat(e, cat)}
+                                    href={`#${cat}`}
                                     category={cat}
                                 >
                                     {cat}
                                 </CatButton>
                             )}
                         </div>
+
+                        {/* TAG BUTTONS */}
                         <div className={styles.tagCtn}>
                             {tags.map(tag => 
                                 <TagButton
@@ -192,28 +165,21 @@ function App() {
                         </div>
                     </header>
                     
-                    {(activeCats.includes("Drinks") || !activeCats.length) && <DrinkSection drinks={drinks}/>}
+                    <DrinkSection drinks={drinks}/>
                     
-                    {categories.map(cat => {
-                        if (activeCats.includes(cat) || !activeCats.length){
-                            return (
-                                <CategorySection title={cat} key={cat}>
-                                    <ul>
-                                        {menu.map(item => {
-                                            if(item.category === cat && tagsMatch(item)){
-                                                return <MenuItem type='food' item={item} key={item.name}/>
-                                            }else {
-                                                return null
-                                            }
-                                        })}
-                                    </ul>
-                                </CategorySection>
-                            )
-                        }else {
-                            return null
-                        }
-                        
-                    })}
+                    {categories.map(cat => (
+                        <CategorySection title={cat} key={cat}>
+                            <ul>
+                                {menu.map(item => {
+                                    if(item.category === cat && tagsMatch(item)){
+                                        return <MenuItem type='food' item={item} key={item.name}/>
+                                    }else {
+                                        return null
+                                    }
+                                })}
+                            </ul>
+                        </CategorySection>
+                    ))}
                 </main>
         </ColorContext.Provider>
     );
