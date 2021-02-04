@@ -12,7 +12,7 @@ import DrinkIcon from '../../icons/categories/DrinkIcon';
 import SpecialsIcon from '../../icons/categories/SpecialsIcon';
 import DessertIcon from '../../icons/categories/DessertIcon';
 
-const CatButton = ({href, category, children}) => {
+const CatButton = ({onClick, category, children}) => {
 
     const colors = useContext(ColorContext);
 
@@ -29,9 +29,9 @@ const CatButton = ({href, category, children}) => {
     }
 
     return (
-        <a
+        <button
             className={styles.catButton}
-            href={href}
+            onClick={onClick}
             style={{
                 background: colors.categoryButtonColor,
                 color: '#141518',
@@ -42,7 +42,7 @@ const CatButton = ({href, category, children}) => {
             </div>
             
             {children}
-        </a>
+        </button>
     );
 };
 

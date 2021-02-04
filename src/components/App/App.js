@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import './App.module.scss'
 
 //import components
@@ -37,6 +37,10 @@ function App() {
     const [activeTags, setActiveTags] = useState([]);
 
     const [siteColors, setSiteColors] = useState(defaultSiteColors);
+
+    //declare refs
+    const categoryRefs = useRef([]);
+    const navRef = useRef(null);
 
     //call to API and populate menu
     useEffect(() => {
@@ -123,12 +127,20 @@ function App() {
         }
     }
 
+    const scrollToCategory = (i) => {
+        const navHeight = navRef.current.scrollHeight + 8;
+        window.scrollTo({
+            top: window.pageYOffset + categoryRefs.current[i].getBoundingClientRect().top - navHeight,
+            behavior: 'smooth',
+        })
+    }
+
     return (
         <ColorContext.Provider value={siteColors}>
                 <TopBar />
                 <main>
 
-                    <header className={styles.headerCtn}>
+                    <header className={styles.headerCtn} ref={navRef}>
                         <h1 className={styles.logo}>Logo Here</h1>
 
                         {/* CATEGORY BUTTONS */}
@@ -141,10 +153,10 @@ function App() {
                                     Drinks
                                 </CatButton>
                             }
-                            {categories.map(cat => 
+                            {categories.map((cat, i) => 
                                 <CatButton
                                     key={cat}
-                                    href={`#${cat}`}
+                                    onClick={() => scrollToCategory(i)}
                                     category={cat}
                                 >
                                     {cat}
@@ -167,8 +179,8 @@ function App() {
                     
                     <DrinkSection drinks={drinks}/>
                     
-                    {categories.map(cat => (
-                        <CategorySection title={cat} key={cat}>
+                    {categories.map((cat, i) => (
+                        <CategorySection title={cat} key={cat} ref={ref => categoryRefs.current[i] = ref}>
                             <ul>
                                 {menu.map(item => {
                                     if(item.category === cat && tagsMatch(item)){
@@ -180,6 +192,7 @@ function App() {
                             </ul>
                         </CategorySection>
                     ))}
+
                 </main>
         </ColorContext.Provider>
     );
