@@ -12,7 +12,7 @@ import DrinkIcon from '../../icons/categories/DrinkIcon';
 import SpecialsIcon from '../../icons/categories/SpecialsIcon';
 import DessertIcon from '../../icons/categories/DessertIcon';
 
-const CatButton = ({onClick, category, children}) => {
+const CatButton = ({onClick, category, isActive, children}) => {
 
     const colors = useContext(ColorContext);
 
@@ -33,7 +33,7 @@ const CatButton = ({onClick, category, children}) => {
             className={styles.catButton}
             onClick={onClick}
             style={{
-                background: colors.categoryButtonColor,
+                background: isActive ? colors.mainColor : colors.categoryButtonColor,
                 color: '#141518',
             }}
         >

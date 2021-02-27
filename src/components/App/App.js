@@ -6,6 +6,7 @@ import TopBar from '../TopBar/TopBar';
 import MenuItem from '../MenuItem/MenuItem';
 import CategorySection from '../CategorySection/CategorySection';
 import CatButton from '../CategoryButton/CatButton';
+import CatContainer from '../CategoryButtonContainer/CategoryButtonContainer';
 import TagButton from '../TagButton/TagButton'
 import DrinkSection from '../DrinkSection/DrinkSection';
 
@@ -28,19 +29,49 @@ const ColorContext = React.createContext(defaultSiteColors);
 
 //start app function
 function App() {
+    //declare state
     const [menu, setMenu] = useState([]);
     const [drinks, setDrinks] = useState([])
-
     const [categories, setCategories] = useState([]);
-
+    const [catInView, setCatInView] = useState(null);
     const [tags, setTags] = useState([]);
     const [activeTags, setActiveTags] = useState([]);
-
     const [siteColors, setSiteColors] = useState(defaultSiteColors);
 
     //declare refs
     const categoryRefs = useRef([]);
     const navRef = useRef(null);
+    const prevScrollPos = useRef(0);
+
+   //set scrolling listener
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY === 0){
+                setCatInView(null);
+            } else if (catInView === null){
+                setCatInView(0);
+            } else if (window.scrollY > prevScrollPos.current){
+                if (window.scrollY >= getCatPosition(catInView + 1)){
+                    setCatInView(catInView + 1)
+                }
+            }else {
+                if (catInView > 0){
+                    if (window.scrollY <= getCatPosition(catInView - 1)){
+                        setCatInView(catInView - 1)
+                    }
+                }
+            }
+    
+            prevScrollPos.current = window.scrollY;
+        }
+        
+        window.addEventListener("scroll", handleScroll);
+
+        //cleanup function
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        }
+    }, [prevScrollPos, catInView])
 
     //call to API and populate menu
     useEffect(() => {
@@ -128,11 +159,17 @@ function App() {
     }
 
     const scrollToCategory = (i) => {
-        const navHeight = navRef.current.scrollHeight + 8;
+        console.log("Scrolling to: ", getCatPosition(i));
+        setCatInView(i);
         window.scrollTo({
-            top: window.pageYOffset + categoryRefs.current[i].getBoundingClientRect().top - navHeight,
+            top: getCatPosition(i),
             behavior: 'smooth',
         })
+    }
+
+    const getCatPosition = (i) => {
+        const navHeight = navRef.current.scrollHeight + 8;
+        return window.pageYOffset + categoryRefs.current[i].getBoundingClientRect().top - navHeight;
     }
 
     return (
@@ -144,25 +181,26 @@ function App() {
                         <h1 className={styles.logo}>Logo Here</h1>
 
                         {/* CATEGORY BUTTONS */}
-                        <div className={styles.catCtn}>
-                            {drinks.length > 0 &&
+                        <CatContainer position={catInView}>
+                            {/* {drinks.length > 0 &&
                                 <CatButton
                                     href={`#Drinks`}
                                     category="Drinks"
                                 >
                                     Drinks
                                 </CatButton>
-                            }
+                            } */}
                             {categories.map((cat, i) => 
                                 <CatButton
                                     key={cat}
                                     onClick={() => scrollToCategory(i)}
                                     category={cat}
+                                    isActive={catInView === i}
                                 >
                                     {cat}
                                 </CatButton>
                             )}
-                        </div>
+                        </CatContainer>
 
                         {/* TAG BUTTONS */}
                         <div className={styles.tagCtn}>
@@ -177,7 +215,7 @@ function App() {
                         </div>
                     </header>
                     
-                    <DrinkSection drinks={drinks}/>
+                    {/* <DrinkSection drinks={drinks}/> */}
                     
                     {categories.map((cat, i) => (
                         <CategorySection title={cat} key={cat} ref={ref => categoryRefs.current[i] = ref}>

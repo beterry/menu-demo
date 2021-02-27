@@ -16,32 +16,11 @@
     padding: 1rem 0;
 }
 
-.catCtn{
-    display: flex;
-
-    overflow-x: scroll;
-
-    margin-bottom: .5rem;
-
-    button:first-child{
-        margin-left: 1rem !important;
-    }
-
-    button:last-child{
-        margin-right: 1rem !important;
-    }
-}
-
 .tagCtn{
     display: flex;
 
     overflow-x: scroll;
 
-    button:first-child{
-        margin-left: 1rem !important;
-    }
-
-    button:last-child{
-        margin-right: 1rem !important;
-    }
+    padding: 0 .5rem;
+    margin-right: .5rem;
 }
