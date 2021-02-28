@@ -19,8 +19,6 @@ const CategoryButtonContainer = ({children, position}) => {
 
     useEffect(() => {       
         containerRef.current.scrollLeft = (80 + 8) * position;
-
-        console.log('scrollLeft:' + containerRef.current.scrollLeft);
     }, [position])
 
     return (

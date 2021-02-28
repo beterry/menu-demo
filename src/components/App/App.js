@@ -46,14 +46,18 @@ function App() {
    //set scrolling listener
     useEffect(() => {
         const handleScroll = () => {
+            if (catInView === categories.length - 1) {return};
+
             if (window.scrollY === 0){
                 setCatInView(null);
             } else if (catInView === null){
                 setCatInView(0);
+            //scrolling down
             } else if (window.scrollY > prevScrollPos.current){
                 if (window.scrollY >= getCatPosition(catInView + 1)){
                     setCatInView(catInView + 1)
                 }
+            //scrolling up
             }else {
                 if (catInView > 0){
                     if (window.scrollY <= getCatPosition(catInView - 1)){
@@ -71,7 +75,7 @@ function App() {
         return () => {
             window.removeEventListener("scroll", handleScroll);
         }
-    }, [prevScrollPos, catInView])
+    }, [prevScrollPos, catInView, categories])
 
     //call to API and populate menu
     useEffect(() => {
@@ -159,7 +163,6 @@ function App() {
     }
 
     const scrollToCategory = (i) => {
-        console.log("Scrolling to: ", getCatPosition(i));
         setCatInView(i);
         window.scrollTo({
             top: getCatPosition(i),
