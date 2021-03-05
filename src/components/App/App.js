@@ -3,12 +3,10 @@ import './App.module.scss'
 
 //import components
 import TopBar from '../TopBar/TopBar';
-import MenuItem from '../MenuItem/MenuItem';
 import CategorySection from '../CategorySection/CategorySection';
 import CatButton from '../CategoryButton/CatButton';
 import CatContainer from '../CategoryButtonContainer/CategoryButtonContainer';
 import TagButton from '../TagButton/TagButton'
-import DrinkSection from '../DrinkSection/DrinkSection';
 
 //import styles
 import styles from './App.module.scss';
@@ -31,7 +29,6 @@ const ColorContext = React.createContext(defaultSiteColors);
 function App() {
     //declare state
     const [menu, setMenu] = useState([]);
-    const [drinks, setDrinks] = useState([])
     const [categories, setCategories] = useState([]);
     const [catInView, setCatInView] = useState(null);
     const [tags, setTags] = useState([]);
@@ -40,6 +37,7 @@ function App() {
 
     //declare refs
     const categoryRefs = useRef([]);
+    const numberOfCats = useRef(0);
     const navRef = useRef(null);
     const prevScrollPos = useRef(0);
 
@@ -54,7 +52,7 @@ function App() {
             //scrolling down
             } else if (window.scrollY > prevScrollPos.current){
                 //this conditional protects from crashing when last cat is selected from buttons
-                if (catInView < categories.length - 1) {
+                if (catInView < numberOfCats.current - 1) {
                     if (window.scrollY >= getCatPosition(catInView + 1)){
                         setCatInView(catInView + 1)
                     }
@@ -77,23 +75,28 @@ function App() {
         return () => {
             window.removeEventListener("scroll", handleScroll);
         }
-    }, [prevScrollPos, catInView, categories])
+    }, [prevScrollPos, catInView, numberOfCats])
 
     //call to API and populate menu
     useEffect(() => {
+        console.log("MAKING CALLS!...")
+
+        let runningMenu = [];
+        // runningMenu = [...response.items.map(item => item.fields), ...menu];
+
         //food items
-        client.getEntries({
-            'content_type': 'item'
-        })
-            .then((response) => setMenu(response.items.map(item => item.fields)))
-            .catch(console.error);
+        const foodCall = client.getEntries({'content_type': 'item'})
 
         //drinks items
-        client.getEntries({
-            'content_type': 'drinkItem'
-        })
-            .then((response) => setDrinks(response.items.map(item => item.fields)))
-            .catch(console.error);
+        const drinkCall = client.getEntries({'content_type': 'drinkItem'})
+
+        Promise.all([foodCall, drinkCall]).then((res) => {
+            //go through responses and combine the results
+            res.forEach(val => {
+                runningMenu = runningMenu.concat(val.items.map(item => item.fields));
+            })
+            setMenu(runningMenu);
+        });
 
         //site settings
         client.getEntries({
@@ -123,6 +126,7 @@ function App() {
         }
         setCategories(tempCats);
         setTags(tempTags);
+        numberOfCats.current = tempCats.length;
     }, [menu])
 
     const handleTapTag = (e, newTag) => {
@@ -223,17 +227,12 @@ function App() {
                     {/* <DrinkSection drinks={drinks}/> */}
                     
                     {categories.map((cat, i) => (
-                        <CategorySection title={cat} key={cat} ref={ref => categoryRefs.current[i] = ref}>
-                            <ul>
-                                {menu.map(item => {
-                                    if(item.category === cat && tagsMatch(item)){
-                                        return <MenuItem type='food' item={item} key={item.name}/>
-                                    }else {
-                                        return null
-                                    }
-                                })}
-                            </ul>
-                        </CategorySection>
+                        <CategorySection 
+                            title={cat}
+                            key={cat}
+                            ref={ref => categoryRefs.current[i] = ref}
+                            items={menu.filter(item => item.category === cat && tagsMatch(item))}
+                        />
                     ))}
 
                 </main>
