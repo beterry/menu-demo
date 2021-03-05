@@ -46,17 +46,19 @@ function App() {
    //set scrolling listener
     useEffect(() => {
         const handleScroll = () => {
-            if (catInView === categories.length - 1) {return};
-
+            
             if (window.scrollY === 0){
                 setCatInView(null);
             } else if (catInView === null){
                 setCatInView(0);
             //scrolling down
             } else if (window.scrollY > prevScrollPos.current){
-                if (window.scrollY >= getCatPosition(catInView + 1)){
-                    setCatInView(catInView + 1)
-                }
+                //this conditional protects from crashing when last cat is selected from buttons
+                if (catInView < categories.length - 1) {
+                    if (window.scrollY >= getCatPosition(catInView + 1)){
+                        setCatInView(catInView + 1)
+                    }
+                };
             //scrolling up
             }else {
                 if (catInView > 0){
