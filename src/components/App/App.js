@@ -7,6 +7,9 @@ import CategorySection from '../CategorySection/CategorySection';
 import CatButton from '../CategoryButton/CatButton';
 import CatContainer from '../CategoryButtonContainer/CategoryButtonContainer';
 
+//import utiltities
+import sortCategories from '../../utilities/sortCategories';
+
 //import styles
 import styles from './App.module.scss';
 
@@ -113,7 +116,7 @@ function App() {
                 }
             })
         }
-        setCategories(tempCats);
+        setCategories(sortCategories(tempCats));
         numberOfCats.current = tempCats.length;
     }, [menu])
 
