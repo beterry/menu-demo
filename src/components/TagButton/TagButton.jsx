@@ -1,5 +1,5 @@
 import {useContext} from 'react'
-import {ColorContext} from '../App/App'
+import {BrandContext} from '../App/App'
 
 import VegIcon from '../../icons/food/VegIcon'
 import FireIcon from '../../icons/food/FireIcon'
@@ -25,7 +25,7 @@ const renderTagIcon = (tag, color) => {
 
 const TagButton = ({handleTapTag, tag, isActive}) => {
 
-    const colors = useContext(ColorContext)
+    const colors = useContext(BrandContext)
 
     return (
         <button

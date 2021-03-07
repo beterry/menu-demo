@@ -6,7 +6,6 @@ import TopBar from '../TopBar/TopBar';
 import CategorySection from '../CategorySection/CategorySection';
 import CatButton from '../CategoryButton/CatButton';
 import CatContainer from '../CategoryButtonContainer/CategoryButtonContainer';
-import TagButton from '../TagButton/TagButton'
 
 //import styles
 import styles from './App.module.scss';
@@ -19,11 +18,14 @@ const client = contentful.createClient({
 });
 
 //create context
-const defaultSiteColors = {
+const defaultSiteBrand = {
+    companyName: 'Logo Here',
+    website: 'https://benterry.dev',
+    phone: '1 717 419 0478',
     mainColor: '#e6e6e6',
     categoryButtonColor: '#e6e6e6',
 };
-const ColorContext = React.createContext(defaultSiteColors);
+const BrandContext = React.createContext(defaultSiteBrand);
 
 //start app function
 function App() {
@@ -31,7 +33,7 @@ function App() {
     const [menu, setMenu] = useState([]);
     const [categories, setCategories] = useState([]);
     const [catInView, setCatInView] = useState(null);
-    const [siteColors, setSiteColors] = useState(defaultSiteColors);
+    const [siteBrand, setSiteBrand] = useState(defaultSiteBrand);
 
     //declare refs
     const categoryRefs = useRef([]);
@@ -77,16 +79,13 @@ function App() {
 
     //call to API and populate menu
     useEffect(() => {
-        console.log("MAKING CALLS!...")
-
         let runningMenu = [];
-        // runningMenu = [...response.items.map(item => item.fields), ...menu];
 
         //food items
-        const foodCall = client.getEntries({'content_type': 'item'})
+        const foodCall = client.getEntries({'content_type': 'item'});
 
         //drinks items
-        const drinkCall = client.getEntries({'content_type': 'drinkItem'})
+        const drinkCall = client.getEntries({'content_type': 'drinkItem'});
 
         Promise.all([foodCall, drinkCall]).then((res) => {
             //go through responses and combine the results
@@ -98,13 +97,13 @@ function App() {
 
         //site settings
         client.getEntries({
-            'content_type': 'siteSettings'
+            'content_type': 'brand'
         })
-            .then((response) => setSiteColors({...response.items[0].fields}))
+            .then((response) => setSiteBrand({...response.items[0].fields}))
             .catch(console.error);
     }, [])
 
-    //parse menu and discover categories and tags
+    //parse menu and discover categories
     useEffect(() => {
         let tempCats = [];
         if (menu.length > 0){
@@ -132,12 +131,15 @@ function App() {
     }
 
     return (
-        <ColorContext.Provider value={siteColors}>
+        <BrandContext.Provider value={siteBrand}>
                 <TopBar />
                 <main>
 
                     <header className={styles.headerCtn} ref={navRef}>
-                        <h1 className={styles.logo}>Logo Here</h1>
+                        <div className={styles.logo}>
+                            <h1 style={{color: siteBrand.mainColor}}>{siteBrand.companyName}</h1>
+                            <h2>{siteBrand.companySubtitle}</h2>
+                        </div>
 
                         {/* CATEGORY BUTTONS */}
                         <CatContainer position={catInView}>
@@ -165,8 +167,8 @@ function App() {
                     ))}
 
                 </main>
-        </ColorContext.Provider>
+        </BrandContext.Provider>
     );
 }
 
-export { App as default, ColorContext}
+export { App as default, BrandContext}

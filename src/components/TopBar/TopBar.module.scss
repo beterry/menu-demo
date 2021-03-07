@@ -5,11 +5,12 @@
 }
 
 .nav_inner{
-    // max-width: 85%;
+    display: flex;
+    justify-content: space-between;
     margin: 0 auto;
 }
 
-.btn_home{
+.btn_icon{
     @include btn-icon;
     &:hover{
         background-color: rgba(0,0,0,.1);

@@ -1,5 +1,5 @@
 import {useContext} from 'react';
-import {ColorContext} from '../App/App';
+import {BrandContext} from '../App/App';
 import styles from './CatButton.module.scss';
 
 import AppIcon from '../../icons/categories/AppIcon';
@@ -14,7 +14,7 @@ import DessertIcon from '../../icons/categories/DessertIcon';
 
 const CatButton = ({onClick, category, isActive, children}) => {
 
-    const colors = useContext(ColorContext);
+    const colors = useContext(BrandContext);
 
     const catIcons = {
         Apps: <AppIcon color='#141518'/>,

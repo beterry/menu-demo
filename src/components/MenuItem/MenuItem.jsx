@@ -1,5 +1,5 @@
 import {useContext} from 'react'
-import {ColorContext} from '../App/App'
+import {BrandContext} from '../App/App'
 
 import styles from './MenuItem.module.scss'
 
@@ -11,7 +11,7 @@ import NewIcon from '../../icons/food/NewIcon'
 
 const MenuItem = ({item, type, disabled}) => {
 
-    const colors = useContext(ColorContext)
+    const colors = useContext(BrandContext)
 
     //compile ingredients string
     let ingredientString = ""
