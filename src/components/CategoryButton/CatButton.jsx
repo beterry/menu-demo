@@ -17,15 +17,15 @@ const CatButton = ({onClick, category, isActive, children}) => {
     const colors = useContext(BrandContext);
 
     const catIcons = {
-        Apps: <AppIcon color='#141518'/>,
-        Desserts: <DessertIcon color='#141518'/>,
-        Entrees: <EntreeIcon color='#141518'/>,
-        Burgers: <BurgerIcon color='#141518'/>,
-        Sandwiches: <SandwichIcon color='#141518'/>,
-        Salads: <SaladIcon color='#141518'/>,
-        Flatbreads: <FlatbreadIcon color='#141518'/>,
-        Specials: <SpecialsIcon color='#141518'/>,
-        Drinks: <DrinkIcon color='#141518'/>,
+        Apps: <AppIcon color={isActive ? 'white' : '#141518'}/>,
+        Desserts: <DessertIcon color={isActive ? 'white' : '#141518'}/>,
+        Entrees: <EntreeIcon color={isActive ? 'white' : '#141518'}/>,
+        Burgers: <BurgerIcon color={isActive ? 'white' : '#141518'}/>,
+        Sandwiches: <SandwichIcon color={isActive ? 'white' : '#141518'}/>,
+        Salads: <SaladIcon color={isActive ? 'white' : '#141518'}/>,
+        Flatbreads: <FlatbreadIcon color={isActive ? 'white' : '#141518'}/>,
+        Specials: <SpecialsIcon color={isActive ? 'white' : '#141518'}/>,
+        Drinks: <DrinkIcon color={isActive ? 'white' : '#141518'}/>,
     }
 
     return (
@@ -34,7 +34,7 @@ const CatButton = ({onClick, category, isActive, children}) => {
             onClick={onClick}
             style={{
                 background: isActive ? colors.mainColor : colors.categoryButtonColor,
-                color: '#141518',
+                color: isActive ? 'white' : '#141518',
             }}
         >
             <div className={styles.iconCtn}>

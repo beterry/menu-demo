@@ -142,7 +142,7 @@ function App() {
                         </div>
 
                         {/* CATEGORY BUTTONS */}
-                        <CatContainer position={catInView}>
+                        <CatContainer position={catInView} numberOfCats={numberOfCats.current}>
                             {categories.map((cat, i) => 
                                 <CatButton
                                     key={cat}

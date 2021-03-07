@@ -5,25 +5,30 @@ const Container = styled.div`
     position: relative;
     overflow-x: scroll;
     scroll-behavior: smooth;
-    margin: 0 .5rem .5rem 0;
-    padding: 0 .5rem;
+    margin-bottom: 1rem;
 `
 
 const Rail = styled.div`
-    display: flex;
+    display: grid;
+    gap: 4px;
+    grid-template-columns: .5rem repeat(${props => props.columns}, 1fr) .5rem;
+
+    &::before, &::after{
+        content: '';
+    } 
 `
 
-const CategoryButtonContainer = ({children, position}) => {
+const CategoryButtonContainer = ({children, position, numberOfCats}) => {
     
     let containerRef = useRef(null);
 
     useEffect(() => {       
-        containerRef.current.scrollLeft = (80 + 8) * position;
+        containerRef.current.scrollLeft = ((80 + 4) * position) - 8;
     }, [position])
 
     return (
         <Container ref={containerRef}>
-            <Rail position={position}>
+            <Rail columns={numberOfCats}>
                 {children}
             </Rail>
         </Container>
