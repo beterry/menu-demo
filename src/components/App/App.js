@@ -31,8 +31,6 @@ function App() {
     const [menu, setMenu] = useState([]);
     const [categories, setCategories] = useState([]);
     const [catInView, setCatInView] = useState(null);
-    const [tags, setTags] = useState([]);
-    const [activeTags, setActiveTags] = useState([]);
     const [siteColors, setSiteColors] = useState(defaultSiteColors);
 
     //declare refs
@@ -109,64 +107,16 @@ function App() {
     //parse menu and discover categories and tags
     useEffect(() => {
         let tempCats = [];
-        let tempTags = [];
         if (menu.length > 0){
             menu.forEach(item => {
                 if (!tempCats.includes(item.category)){
                     tempCats.push(item.category);
                 }
-                if (item.tags){
-                    item.tags.forEach(tag => {
-                        if (!tempTags.includes(tag)){
-                            tempTags.push(tag);
-                        }
-                    })
-                }
             })
         }
         setCategories(tempCats);
-        setTags(tempTags);
         numberOfCats.current = tempCats.length;
     }, [menu])
-
-    const handleTapTag = (e, newTag) => {
-        e.preventDefault();
-        const newTagIndex = activeTags.indexOf(newTag);
-
-        if (newTagIndex >= 0){
-            //delete tag from array
-            let newActiveTags = [...activeTags];
-            newActiveTags.splice(newTagIndex, 1);
-            setActiveTags(newActiveTags);
-        }else {
-            //add new tag to state
-            setActiveTags([...activeTags, newTag]);
-        }
-    }
-
-    //returns true if item matches the tags selected
-    const tagsMatch = (item) => {
-        //always return true of nothing is slected
-        if (activeTags.length === 0){
-            return true;
-
-        } else {
-            //if there are tags selected but item has none
-            if (!item.tags){
-                return false;
-            }
-
-            //return false if there is a mismatch
-            for (let i = 0; i<activeTags.length; i++){
-                if (!item.tags.includes(activeTags[i])){
-                    return false;
-                }
-            }
-
-            //everything matches
-            return true;
-        }
-    }
 
     const scrollToCategory = (i) => {
         setCatInView(i);
@@ -191,14 +141,6 @@ function App() {
 
                         {/* CATEGORY BUTTONS */}
                         <CatContainer position={catInView}>
-                            {/* {drinks.length > 0 &&
-                                <CatButton
-                                    href={`#Drinks`}
-                                    category="Drinks"
-                                >
-                                    Drinks
-                                </CatButton>
-                            } */}
                             {categories.map((cat, i) => 
                                 <CatButton
                                     key={cat}
@@ -211,27 +153,14 @@ function App() {
                             )}
                         </CatContainer>
 
-                        {/* TAG BUTTONS */}
-                        <div className={styles.tagCtn}>
-                            {tags.map(tag => 
-                                <TagButton
-                                    tag={tag}
-                                    key={tag}
-                                    handleTapTag={(e) => handleTapTag(e, tag)}
-                                    isActive={activeTags.includes(tag)}
-                                />
-                            )}
-                        </div>
                     </header>
-                    
-                    {/* <DrinkSection drinks={drinks}/> */}
                     
                     {categories.map((cat, i) => (
                         <CategorySection 
                             title={cat}
                             key={cat}
                             ref={ref => categoryRefs.current[i] = ref}
-                            items={menu.filter(item => item.category === cat && tagsMatch(item))}
+                            items={menu.filter(item => item.category === cat)}
                         />
                     ))}
 

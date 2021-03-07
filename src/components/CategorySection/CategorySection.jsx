@@ -14,7 +14,6 @@ const Category = React.forwardRef(({title, items}, ref) => {
     const drinkCats = useRef([]);
 
     if (title === "Drinks"){
-        console.log("Getting drink Cats...");
         items.forEach(item => {
             if (!drinkCats.current.includes(item.drinkCategory)){
                 drinkCats.current.push(item.drinkCategory);

@@ -9,7 +9,7 @@ import GlutenIcon from '../../icons/food/GlutenIcon'
 import PopIcon from '../../icons/food/PopIcon'
 import NewIcon from '../../icons/food/NewIcon'
 
-const MenuItem = ({item, type}) => {
+const MenuItem = ({item, type, disabled}) => {
 
     const colors = useContext(ColorContext)
 
@@ -72,22 +72,33 @@ const MenuItem = ({item, type}) => {
     
     if (type === "food"){
         return (
-            <li className={styles.menuItem}>
+            <li className={`${styles.menuItem} ${disabled && styles.disabled}`}>
                 <div className={styles.top}>
                     <div className={styles.name}>
                         <h4>{item.name}</h4>
-                        {renderTagIcons()}
+                        {/*renderTagIcons()*/}
                     </div>
                     <h5 className={styles.price}>{`$${item.price.toFixed(2)}`}</h5>
                 </div>
                 <p>{ingredientString}</p>
+                <ul>
+                    {item.tags?.map((tag, i) => 
+                        <li
+                            key={`${item.name} tag ${i}`}
+                            className={styles.tag}
+                            style={{background: colors.categoryButtonColor}}
+                        >
+                            {tag}
+                        </li>)
+                    }
+                </ul>
             </li>
         )
     }
 
     else if (type === 'drink'){
         return (
-            <li className={styles.menuItem}>
+            <li className={`${styles.menuItem} ${disabled && styles.disabled}`}>
                 <div className={styles.top}>
                     <div className={styles.name}>
                         <h4>{item.name}</h4>
