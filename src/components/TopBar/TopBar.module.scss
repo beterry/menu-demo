@@ -4,7 +4,7 @@
     padding: .5rem 1rem;
 }
 
-.nav_inner{
+.topbar_inner{
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
@@ -14,5 +14,19 @@
     @include btn-icon;
     &:hover{
         background-color: rgba(0,0,0,.1);
+    }
+}
+
+.logo{
+    text-align: center;
+    padding: 1rem 0 0 0;
+    background: white;
+
+    h1{
+        text-transform: uppercase;
+    }
+
+    h2{
+        font-size: .875rem;
     }
 }

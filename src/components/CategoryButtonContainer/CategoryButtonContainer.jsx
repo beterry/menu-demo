@@ -10,7 +10,7 @@ const Container = styled.div`
 
 const Rail = styled.div`
     display: grid;
-    gap: 4px;
+    gap: 8px;
     grid-template-columns: .5rem repeat(${props => props.columns}, 1fr) .5rem;
 
     &::before, &::after{
@@ -23,7 +23,7 @@ const CategoryButtonContainer = ({children, position, numberOfCats}) => {
     let containerRef = useRef(null);
 
     useEffect(() => {       
-        containerRef.current.scrollLeft = ((80 + 4) * position) - 8;
+        containerRef.current.scrollLeft = ((80 + 8) * position) - 8;
     }, [position])
 
     return (

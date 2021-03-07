@@ -136,10 +136,6 @@ function App() {
                 <main>
 
                     <header className={styles.headerCtn} ref={navRef}>
-                        <div className={styles.logo}>
-                            <h1 style={{color: siteBrand.mainColor}}>{siteBrand.companyName}</h1>
-                            <h2>{siteBrand.companySubtitle}</h2>
-                        </div>
 
                         {/* CATEGORY BUTTONS */}
                         <CatContainer position={catInView} numberOfCats={numberOfCats.current}>

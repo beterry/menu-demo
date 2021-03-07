@@ -1,5 +1,6 @@
 .headerCtn{
     background: white;
+    padding-top: 1rem;
 
     //border
     border-bottom: 1px solid #D1D1D1;
@@ -9,26 +10,4 @@
     top: 0;
 
     z-index: 100;
-}
-
-.logo{
-    text-align: center;
-    padding: 1rem 0;
-
-    h1{
-        text-transform: uppercase;
-    }
-
-    h2{
-        font-size: .875rem;
-    }
-}
-
-.tagCtn{
-    display: flex;
-
-    overflow-x: scroll;
-
-    padding: 0 .5rem;
-    margin-right: .5rem;
 }
