@@ -82,6 +82,7 @@ function App() {
 
     //call to API and populate menu
     useEffect(() => {
+        console.log("Calling API...");
         let runningMenu = [];
 
         //food items
@@ -90,12 +91,14 @@ function App() {
         //drinks items
         const drinkCall = client.getEntries({'content_type': 'drinkItem'});
 
-        Promise.all([foodCall, drinkCall]).then((res) => {
+        Promise.all([foodCall, drinkCall])
+        .then((res) => {
             //go through responses and combine the results
             res.forEach(val => {
                 runningMenu = runningMenu.concat(val.items.map(item => item.fields));
             })
             setMenu(runningMenu);
+            discoverCategories(runningMenu);
         });
 
         //site settings
@@ -106,11 +109,11 @@ function App() {
             .catch(console.error);
     }, [])
 
-    //parse menu and discover categories
-    useEffect(() => {
+    const discoverCategories = (menuItems) => {
+        console.log("Discovering categories...")
         let tempCats = [];
-        if (menu.length > 0){
-            menu.forEach(item => {
+        if (menuItems.length > 0){
+            menuItems.forEach(item => {
                 if (!tempCats.includes(item.category)){
                     tempCats.push(item.category);
                 }
@@ -118,7 +121,7 @@ function App() {
         }
         setCategories(sortCategories(tempCats));
         numberOfCats.current = tempCats.length;
-    }, [menu])
+    }
 
     const scrollToCategory = (i) => {
         setCatInView(i);
@@ -129,14 +132,24 @@ function App() {
     }
 
     const getCatPosition = (i) => {
-        const navHeight = navRef.current.scrollHeight + 8;
-        return window.pageYOffset + categoryRefs.current[i].getBoundingClientRect().top - navHeight;
+        if (i >= 0 && i < numberOfCats.current){
+            if (window.innerWidth < 768){
+                const navHeight = navRef.current.scrollHeight + 8;
+                return window.pageYOffset + categoryRefs.current[i].getBoundingClientRect().top - navHeight;
+            }else {
+                return window.pageYOffset + categoryRefs.current[i].getBoundingClientRect().top - 32;
+            }
+        }else {
+            return 0;
+        }
     }
+
+    console.log(`Render App: ${categoryRefs.current}`);
 
     return (
         <BrandContext.Provider value={siteBrand}>
                 <TopBar />
-                <main>
+                <main className={styles.appLayout}>
 
                     <header className={styles.headerCtn} ref={navRef}>
 
@@ -155,15 +168,18 @@ function App() {
                         </CatContainer>
 
                     </header>
+
+                    <div>
+                        {categories.map((cat, i) => (
+                            <CategorySection 
+                                title={cat}
+                                key={cat}
+                                ref={ref => categoryRefs.current[i] = ref}
+                                items={menu.filter(item => item.category === cat)}
+                            />
+                        ))}
+                    </div>
                     
-                    {categories.map((cat, i) => (
-                        <CategorySection 
-                            title={cat}
-                            key={cat}
-                            ref={ref => categoryRefs.current[i] = ref}
-                            items={menu.filter(item => item.category === cat)}
-                        />
-                    ))}
 
                 </main>
         </BrandContext.Provider>

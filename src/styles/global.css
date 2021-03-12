@@ -35,3 +35,9 @@ h1{
   /*TODO: add suble focus styles*/
   outline: none;
 }
+
+@media screen and (min-width: 768px){
+  body{
+    /* background: white; */
+  }
+}

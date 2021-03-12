@@ -7,7 +7,6 @@ const sortCategories = (categories) => {
         if (order.indexOf(a) > order.indexOf(b)) {return 1};
         return 0;
     })
-    debugger;
     return sortedCategories;
 }
 

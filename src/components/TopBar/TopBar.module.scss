@@ -29,4 +29,17 @@
     h2{
         font-size: .875rem;
     }
+
+    @media screen and (min-width: 768px) {
+        background: none;
+        padding: 5%;
+
+        h1{
+            font-size: 3rem;
+        }
+
+        h2{
+            font-size: 1rem;
+        }
+    }
 }
