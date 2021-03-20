@@ -6,6 +6,7 @@ import TopBar from '../TopBar/TopBar';
 import CategorySection from '../CategorySection/CategorySection';
 import CatButton from '../CategoryButton/CatButton';
 import CatContainer from '../CategoryButtonContainer/CategoryButtonContainer';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
 
 //import utiltities
 import sortCategories from '../../utilities/sortCategories';
@@ -40,7 +41,6 @@ function App() {
 
     //declare refs
     const categoryRefs = useRef([]);
-    const numberOfCats = useRef(0);
     const navRef = useRef(null);
     const prevScrollPos = useRef(0);
 
@@ -55,7 +55,7 @@ function App() {
             //scrolling down
             } else if (window.scrollY > prevScrollPos.current){
                 //this conditional protects from crashing when last cat is selected from buttons
-                if (catInView < numberOfCats.current - 1) {
+                if (catInView < categories.length - 1) {
                     if (window.scrollY >= getCatPosition(catInView + 1)){
                         setCatInView(catInView + 1)
                     }
@@ -78,7 +78,7 @@ function App() {
         return () => {
             window.removeEventListener("scroll", handleScroll);
         }
-    }, [prevScrollPos, catInView, numberOfCats])
+    }, [prevScrollPos, catInView, categories])
 
     //call to API and populate menu
     useEffect(() => {
@@ -120,7 +120,6 @@ function App() {
             })
         }
         setCategories(sortCategories(tempCats));
-        numberOfCats.current = tempCats.length;
     }
 
     const scrollToCategory = (i) => {
@@ -132,7 +131,7 @@ function App() {
     }
 
     const getCatPosition = (i) => {
-        if (i >= 0 && i < numberOfCats.current){
+        if (i >= 0 && i < categories.length){
             if (window.innerWidth < 768){
                 const navHeight = navRef.current.scrollHeight + 8;
                 return window.pageYOffset + categoryRefs.current[i].getBoundingClientRect().top - navHeight;
@@ -144,17 +143,18 @@ function App() {
         }
     }
 
-    console.log(`Render App: ${categoryRefs.current}`);
-
     return (
         <BrandContext.Provider value={siteBrand}>
+
+                <LoadingScreen isLoading={menu.length === 0} color={siteBrand.mainColor} />
+
                 <TopBar />
                 <main className={styles.appLayout}>
 
                     <header className={styles.headerCtn} ref={navRef}>
 
                         {/* CATEGORY BUTTONS */}
-                        <CatContainer position={catInView} numberOfCats={numberOfCats.current}>
+                        <CatContainer position={catInView} numberOfCats={categories.length}>
                             {categories.map((cat, i) => 
                                 <CatButton
                                     key={cat}
