@@ -1,18 +1,15 @@
-import React, {useState, useEffect, useRef} from 'react'
-import './App.module.scss'
+import React, {useState, useEffect, useRef} from 'react';
+import styled from 'styled-components';
 
 //import components
-import TopBar from '../TopBar/TopBar';
-import CategorySection from '../CategorySection/CategorySection';
-import CatButton from '../CategoryButton/CatButton';
-import CatContainer from '../CategoryButtonContainer/CategoryButtonContainer';
-import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import TopBar from './TopBar';
+import CategorySection from './CategorySection';
+import CatButton from './CatButton';
+import CatContainer from './CategoryButtonContainer';
+import LoadingScreen from './LoadingScreen';
 
 //import utiltities
-import sortCategories from '../../utilities/sortCategories';
-
-//import styles
-import styles from './App.module.scss';
+import sortCategories from '../utilities/sortCategories';
 
 const contentful = require("contentful");
 
@@ -149,9 +146,9 @@ function App() {
                 <LoadingScreen isLoading={menu.length === 0} color={siteBrand.mainColor} />
 
                 <TopBar />
-                <main className={styles.appLayout}>
+                <Wrapper>
 
-                    <header className={styles.headerCtn} ref={navRef}>
+                    <Header ref={navRef}>
 
                         {/* CATEGORY BUTTONS */}
                         <CatContainer position={catInView} numberOfCats={categories.length}>
@@ -167,7 +164,7 @@ function App() {
                             )}
                         </CatContainer>
 
-                    </header>
+                    </Header>
 
                     <div>
                         {categories.map((cat, i) => (
@@ -181,9 +178,49 @@ function App() {
                     </div>
                     
 
-                </main>
+                </Wrapper>
         </BrandContext.Provider>
     );
 }
+
+const Wrapper = styled.main`
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    position: relative;
+    gap: 0;
+    grid-template-columns: 100%;
+
+    @media screen and (min-width: 768px){
+        max-width: 90%;
+        grid-template-columns: auto 1fr;
+        gap: 2rem;
+    }
+
+    @media screen and (min-width: 1024px){
+        width: 80%;
+        max-width: 1200px;
+        grid-template-columns: auto 1fr;
+    }
+`
+
+const Header = styled.header`
+    width: 100%;
+    background: white;
+    padding-top: 1rem;
+
+    border-bottom: 1px solid black;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 100;
+
+    @media screen and (min-width: 768px){
+        position: relative;
+        background: none;
+        padding: 0;
+    }
+`
 
 export { App as default, BrandContext}

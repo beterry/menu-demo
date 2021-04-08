@@ -1,16 +1,17 @@
-@mixin btn-icon {
-    // center icon
+import styled from 'styled-components'
+
+const IconButton = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
 
-    //size
     width: 2.5rem;
     height: 2.5rem;
 
     border-radius: 50%;
 
-    //reset button
     border: none;
     background: none;
-}
+`
+
+export {IconButton};
