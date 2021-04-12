@@ -1,5 +1,5 @@
 import {useContext} from 'react';
-import {BrandContext} from './App';
+import BrandContext from '../utilities/BrandContext';
 import styled from 'styled-components';
 
 import AppIcon from '../icons/categories/AppIcon';

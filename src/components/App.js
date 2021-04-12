@@ -10,23 +10,9 @@ import LoadingScreen from './LoadingScreen';
 
 //import utiltities
 import sortCategories from '../utilities/sortCategories';
-
-const contentful = require("contentful");
-
-const client = contentful.createClient({
-    space: `3t2epby3nzvk`,
-    accessToken: `U6A7spSwhw5u4PPhyxE3PkX4uKkHqhp2DR2JZWRS_j4`,
-});
-
-//create context
-const defaultSiteBrand = {
-    companyName: 'Logo Here',
-    website: 'https://benterry.dev',
-    phone: '1 717 419 0478',
-    mainColor: '#e6e6e6',
-    categoryButtonColor: '#e6e6e6',
-};
-const BrandContext = React.createContext(defaultSiteBrand);
+import getCatPosition from '../utilities/getCatPosition';
+import BrandContext, {defaultSiteBrand} from '../utilities/BrandContext';
+import client from '../utilities/contentful';
 
 //start app function
 function App() {
@@ -43,6 +29,9 @@ function App() {
 
    //set scrolling listener
     useEffect(() => {
+
+        console.log('Use effect is run');
+
         const handleScroll = () => {
             
             if (window.scrollY === 0){
@@ -53,14 +42,14 @@ function App() {
             } else if (window.scrollY > prevScrollPos.current){
                 //this conditional protects from crashing when last cat is selected from buttons
                 if (catInView < categories.length - 1) {
-                    if (window.scrollY >= getCatPosition(catInView + 1)){
+                    if (window.scrollY >= getCatPosition(catInView + 1, navRef.current, categoryRefs.current)){
                         setCatInView(catInView + 1)
                     }
                 };
             //scrolling up
             }else {
                 if (catInView > 0){
-                    if (window.scrollY <= getCatPosition(catInView - 1)){
+                    if (window.scrollY <= getCatPosition(catInView - 1, navRef.current, categoryRefs.current)){
                         setCatInView(catInView - 1)
                     }
                 }
@@ -75,7 +64,7 @@ function App() {
         return () => {
             window.removeEventListener("scroll", handleScroll);
         }
-    }, [prevScrollPos, catInView, categories])
+    }, [prevScrollPos, catInView, categories, navRef, categoryRefs])
 
     //call to API and populate menu
     useEffect(() => {
@@ -95,49 +84,36 @@ function App() {
                 runningMenu = runningMenu.concat(val.items.map(item => item.fields));
             })
             setMenu(runningMenu);
-            discoverCategories(runningMenu);
-        });
+
+            //discover unique categories
+            console.log("Discovering categories...")
+            let tempCats = [];
+            if (runningMenu.length > 0){
+                runningMenu.forEach(item => {
+                    if (!tempCats.includes(item.category)){
+                        tempCats.push(item.category);
+                    }
+                })
+            }
+            setCategories(sortCategories(tempCats));
+        })
+        .catch(console.error)
+        ;
 
         //site settings
         client.getEntries({
             'content_type': 'brand'
         })
-            .then((response) => setSiteBrand({...response.items[0].fields}))
-            .catch(console.error);
+        .then((response) => setSiteBrand({...response.items[0].fields}))
+        .catch(console.error);
     }, [])
-
-    const discoverCategories = (menuItems) => {
-        console.log("Discovering categories...")
-        let tempCats = [];
-        if (menuItems.length > 0){
-            menuItems.forEach(item => {
-                if (!tempCats.includes(item.category)){
-                    tempCats.push(item.category);
-                }
-            })
-        }
-        setCategories(sortCategories(tempCats));
-    }
 
     const scrollToCategory = (i) => {
         setCatInView(i);
         window.scrollTo({
-            top: getCatPosition(i),
+            top: getCatPosition(i, navRef.current, categoryRefs.current),
             behavior: 'smooth',
         })
-    }
-
-    const getCatPosition = (i) => {
-        if (i >= 0 && i < categories.length){
-            if (window.innerWidth < 768){
-                const navHeight = navRef.current.scrollHeight + 8;
-                return window.pageYOffset + categoryRefs.current[i].getBoundingClientRect().top - navHeight;
-            }else {
-                return window.pageYOffset + categoryRefs.current[i].getBoundingClientRect().top - 32;
-            }
-        }else {
-            return 0;
-        }
     }
 
     return (
@@ -147,9 +123,7 @@ function App() {
 
                 <TopBar />
                 <Wrapper>
-
                     <Header ref={navRef}>
-
                         {/* CATEGORY BUTTONS */}
                         <CatContainer position={catInView} numberOfCats={categories.length}>
                             {categories.map((cat, i) => 
@@ -163,7 +137,6 @@ function App() {
                                 </CatButton>
                             )}
                         </CatContainer>
-
                     </Header>
 
                     <div>
@@ -176,8 +149,6 @@ function App() {
                             />
                         ))}
                     </div>
-                    
-
                 </Wrapper>
         </BrandContext.Provider>
     );
@@ -223,4 +194,4 @@ const Header = styled.header`
     }
 `
 
-export { App as default, BrandContext}
+export default App;
