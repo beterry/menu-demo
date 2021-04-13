@@ -178,7 +178,6 @@ const Wrapper = styled.main`
 const Header = styled.header`
     width: 100%;
     background: white;
-    padding-top: 1rem;
 
     border-bottom: 1px solid black;
 

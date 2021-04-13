@@ -50,7 +50,9 @@ const Button = styled.button`
     background-color: var(--backgroundColor);
     color: var(--textColor);
 
-    display: flex;
+    display: inline-flex;
+    vertical-align: top;
+
     flex-direction: column;
     justify-content: center;
     align-items: center;
