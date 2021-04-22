@@ -59,9 +59,9 @@ const Button = styled.button`
     flex-shrink: 0;
 
     border: none;
-    border-radius: .2rem;
+    border-radius: 4px;
 
-    padding: .5rem;
+    padding: 8px;
 
     line-height: 1;
 
@@ -86,7 +86,7 @@ const Icon = styled.div`
     display: flex;
     align-items: center;
 
-    margin-bottom: .325rem;
+    margin-bottom: 5px;
 
     svg{
         width: 100%;

@@ -5,8 +5,8 @@ const IconButton = styled.button`
     justify-content: center;
     align-items: center;
 
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 40px;
+    height: 40px;
 
     border-radius: 50%;
 

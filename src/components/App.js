@@ -165,7 +165,7 @@ const Wrapper = styled.main`
     @media screen and (min-width: 768px){
         max-width: 90%;
         grid-template-columns: auto 1fr;
-        gap: 2rem;
+        gap: 32px;
     }
 
     @media screen and (min-width: 1024px){
