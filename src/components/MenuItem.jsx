@@ -84,7 +84,7 @@ const MenuItem = ({item, type, disabled}) => {
 }
 
 const Item = styled.li`
-    padding: 1rem 0;
+    padding: 16px 0;
 
     border-bottom: 1px solid lightgray;
 
@@ -118,7 +118,7 @@ const Top = styled.div`
     display: flex;
     justify-content: space-between;
 
-    margin-bottom: .5rem;
+    margin-bottom: 8px;
 `
 
 const Ounces = styled.p`
@@ -129,17 +129,17 @@ const Ounces = styled.p`
 `
 
 const DrinkDescription = styled.p`
-    margin-top: 1rem;
+    margin-top: 16px;
     color: #6C6C6C;
 `
 
 const Tag = styled.li`
     display: inline-flex;
-    border-radius: .25rem;
-    padding: .25rem .5rem;
-    margin-right: .25rem;
-    font-size: .75rem;
-    margin-top: .5rem;
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-right: 4px;
+    font-size: .875rem;
+    margin-top: 8px;
     background-color: var(--backgroundColor);
 `
 

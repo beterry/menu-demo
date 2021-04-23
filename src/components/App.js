@@ -27,11 +27,8 @@ function App() {
     const navRef = useRef(null);
     const prevScrollPos = useRef(0);
 
-   //set scrolling listener
+    //set scrolling listener
     useEffect(() => {
-
-        console.log('Use effect is run');
-
         const handleScroll = () => {
             
             if (window.scrollY === 0){

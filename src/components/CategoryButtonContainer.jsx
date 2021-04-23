@@ -30,7 +30,7 @@ const Wrapper = styled.div`
     }
 `
 
-const ButtonRow = styled.div`
+const ButtonRow = styled.nav`
     scroll-behavior: smooth;
     overflow: auto;
     white-space: nowrap;

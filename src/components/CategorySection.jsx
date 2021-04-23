@@ -49,17 +49,17 @@ const Category = React.forwardRef(({title, items}, ref) => {
 const SectionWrapper = styled.section`
     background: white;
 
-    padding: 1.5rem 1rem;
-    margin: .5rem 0;
+    padding: 24px 16px;
+    margin: 8px 0;
 
     border-top: 1px solid black;
     border-bottom: 1px solid black;
 
     @media screen and (min-width: 768px){
         border: 1px solid black;
-        border-radius: .25rem;
+        border-radius: 4px;
 
-        padding: 3rem;
+        padding: 48px;
 
         &:first-child{
             margin-top: 0;
@@ -68,12 +68,12 @@ const SectionWrapper = styled.section`
 `
 
 const SectionHeading = styled.h2`
-    padding-bottom: 1rem;
+    padding-bottom: 16px;
 `
 
 const SubSectionHeading = styled.h3`
     font-weight: 700;
-    padding: 1rem 0;
+    padding: 16px 0;
 `
 
 export default Category;

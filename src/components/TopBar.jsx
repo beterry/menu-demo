@@ -14,7 +14,7 @@ const TopBar = ({activeCat, handleBack}) => {
     const brand = useContext(BrandContext)
 
     return (
-        <header>
+        <Wrapper>
             <TopBarWrapper style={{'--backgroundColor': brand.mainColor}}>
                 <Inner>
                     <TopBarIcon as='a' href={brand.website} target='_blank' rel='noreferrer'>
@@ -29,12 +29,16 @@ const TopBar = ({activeCat, handleBack}) => {
                 <h1 style={{color: brand.mainColor}}>{brand.companyName}</h1>
                 <h2>{brand.companySubtitle}</h2>
             </Logo>
-        </header>
+        </Wrapper>
     )
 }
 
+const Wrapper = styled.header`
+    
+`
+
 const TopBarWrapper = styled.nav`
-    padding: .5rem 1rem;
+    padding: 8px 16px;
     background-color: var(--backgroundColor);
 `
 
@@ -52,8 +56,8 @@ const TopBarIcon = styled(IconButton)`
 
 const Logo = styled.div`
     text-align: center;
-    padding: 1rem 0 0 0;
     background: white;
+    padding: 16px;
 
     h1{
         text-transform: uppercase;
