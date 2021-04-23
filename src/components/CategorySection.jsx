@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import MenuItem from './MenuItem';
 
 const SubSection = ({title, children}) => (
-    <div>
+    <SubSectionWrapper>
         <SubSectionHeading>{title}</SubSectionHeading>
         {children}
-    </div>
+    </SubSectionWrapper>
 )
 
 const Category = React.forwardRef(({title, items}, ref) => {
@@ -67,11 +67,19 @@ const SectionWrapper = styled.section`
     }
 `
 
+const SubSectionWrapper = styled.div`
+    &:not(:first-of-type){
+        margin-top: 24px;
+    }
+`
+
 const SectionHeading = styled.h2`
+    font-size: 2rem;
     padding-bottom: 16px;
 `
 
 const SubSectionHeading = styled.h3`
+    font-size: 1.5rem;
     font-weight: 700;
     padding: 16px 0;
 `

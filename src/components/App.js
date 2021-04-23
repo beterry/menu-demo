@@ -101,7 +101,10 @@ function App() {
         client.getEntries({
             'content_type': 'brand'
         })
-        .then((response) => setSiteBrand({...response.items[0].fields}))
+        .then((response) => {
+            let logoUrl = response.items[0].fields.logo.fields.file.url;
+            setSiteBrand({...response.items[0].fields, logo: logoUrl});
+        })
         .catch(console.error);
     }, [])
 

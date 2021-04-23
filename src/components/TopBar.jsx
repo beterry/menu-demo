@@ -13,21 +13,28 @@ const TopBar = ({activeCat, handleBack}) => {
 
     const brand = useContext(BrandContext)
 
+    const showAlert = (message) => {
+        window.alert(message);
+    }
+
     return (
         <Wrapper>
             <TopBarWrapper style={{'--backgroundColor': brand.mainColor}}>
                 <Inner>
-                    <TopBarIcon as='a' href={brand.website} target='_blank' rel='noreferrer'>
+                    <TopBarIcon
+                        onClick={() => showAlert(`This button would link back to your business's main website.`)}
+                    >
                         <HomeIcon color='white' />
                     </TopBarIcon>
-                    <TopBarIcon as='a' href={`tel:${brand.phone}`}>
+                    <TopBarIcon
+                        onClick={() => showAlert(`This button would open the phone app with your business's phone number ready to call.`)}
+                    >
                         <PhoneIcon color={'white'} />
                     </TopBarIcon>
                 </Inner>
             </TopBarWrapper>
             <Logo>
-                <h1 style={{color: brand.mainColor}}>{brand.companyName}</h1>
-                <h2>{brand.companySubtitle}</h2>
+                <img src={brand.logo} alt={brand.companyName} />
             </Logo>
         </Wrapper>
     )
@@ -59,25 +66,14 @@ const Logo = styled.div`
     background: white;
     padding: 16px;
 
-    h1{
-        text-transform: uppercase;
+    img{
+        width: 60%;
+        max-width: 350px;
     }
 
-    h2{
-        font-size: .875rem;
-    }
-
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 768px){
         background: none;
-        padding: 5%;
-
-        h1{
-            font-size: 3rem;
-        }
-
-        h2{
-            font-size: 1rem;
-        }
+        padding: 3%;
     }
 `
 
