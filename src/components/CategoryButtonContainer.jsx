@@ -5,9 +5,9 @@ const CategoryButtonContainer = ({children, position, numberOfCats}) => {
     
     let containerRef = useRef(null);
 
-    useEffect(() => {     
+    if (containerRef.current){
         containerRef.current.scrollLeft = ((80 + 8) * position);
-    }, [position])
+    }
 
     return (
         <Wrapper>

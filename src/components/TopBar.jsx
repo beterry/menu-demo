@@ -56,6 +56,9 @@ const Inner = styled.div`
 `
 
 const TopBarIcon = styled(IconButton)`
+    img,svg{
+        flex-shrink: 0;
+    }
     &:hover{
         background-color: rgba(0,0,0,.1);
     }

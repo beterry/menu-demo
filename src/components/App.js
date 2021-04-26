@@ -110,10 +110,12 @@ function App() {
 
     const scrollToCategory = (i) => {
         setCatInView(i);
-        window.scrollTo({
-            top: getCatPosition(i, navRef.current, categoryRefs.current),
-            behavior: 'smooth',
-        })
+        setTimeout(
+            window.scrollTo({
+                top: getCatPosition(i, navRef.current, categoryRefs.current),
+                behavior: 'smooth',
+            }
+        ), 100)
     }
 
     return (
@@ -150,6 +152,7 @@ function App() {
                         ))}
                     </div>
                 </Wrapper>
+                <Version>Changed useEffect in category container. Added set timeout to scroll functions</Version>
         </BrandContext.Provider>
     );
 }
@@ -191,6 +194,15 @@ const Header = styled.header`
         background: none;
         padding: 0;
     }
+`
+
+const Version = styled.p`
+    font-size: .75rem;
+    text-align: center;
+    font-weight: bold;
+    width: 80%;
+    margin: 0 auto;
+    padding: 8px;
 `
 
 export default App;

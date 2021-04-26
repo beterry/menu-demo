@@ -70,6 +70,10 @@ const Button = styled.button`
 
     border: 1px solid black;
 
+    svg{
+        flex-shrink: 0;
+    }
+
     &:focus{
         outline: none;
     }
